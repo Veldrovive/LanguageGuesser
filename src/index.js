@@ -8,18 +8,15 @@ var net = new brain.NeuralNetwork();
 
 var PORT = 3000;
 
-net.train([{input: [0, 0], output: [0]},
-    {input: [0, 1], output: [1]},
-    {input: [1, 0], output: [1]},
-    {input: [1, 1], output: [0]}]);
+net.train(arrayToInOut([{input: "Hello", output: [1]}, {input: "Goody", output: [0]}]));
 
 app.get('/help/:id', (req, res) => {
     res.send('Hello World: '+req.params.id);
 });
 
-app.get('/sample/:num1/:num2', (req, res) => {
+app.get('/sample/:string', (req, res) => {
     req = req.params;
-    var output = net.run([req.num1, req.num2]);
+    var output = net.run(toInt(req.string));
 
     res.send("Output: "+output);
 });
@@ -48,6 +45,42 @@ app.get('/read', (req, res) => {
         res.send("Read From Network");
     })
 });
+
+//input array should be objects with input and output
+function arrayToInOut(array){
+    return array.map(toInt);
+    function toInt(array){
+        var intObject =  {input: array.input.toLowerCase().trim().split('').map(char), output: array.output};
+
+        function char(symbol) {
+            return charToDec(symbol);
+        }
+
+        while (intObject.input.length < 15){
+            intObject.input.push(0);
+        }
+
+        return intObject;
+    }
+}
+
+function toInt(array){
+    var intArray = array.toLowerCase().trim().split('').map(char);
+
+    function char(symbol) {
+        return charToDec(symbol);
+    }
+
+    while (intArray.length < 15){
+        intArray.push(0);
+    }
+
+    return intArray;
+}
+
+function charToDec(char){
+    return (char.charCodeAt(0)-96)/27;
+}
 
 app.listen(PORT);
 
