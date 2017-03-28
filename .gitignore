@@ -33,7 +33,6 @@ hs_err_pid*
 
 dist
 node_modules
-.idea
 
 build/
 !gradle-wrapper.jar
