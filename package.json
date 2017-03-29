@@ -13,7 +13,8 @@
   "dependencies": {
     "brain": "^0.7.0",
     "express": "^4.15.2",
-    "jsonfile": "^2.4.0"
+    "jsonfile": "^2.4.0",
+    "node-mind": "^0.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
